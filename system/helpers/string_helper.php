@@ -1,41 +1,6 @@
 <?php
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2018, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package	CodeIgniter
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 1.0.0
- * @filesource
- */
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  * CodeIgniter String Helpers
@@ -49,8 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('trim_slashes'))
-{
+if (!function_exists('trim_slashes')) {
 	/**
 	 * Trim Slashes
 	 *
@@ -76,8 +40,7 @@ if ( ! function_exists('trim_slashes'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('strip_slashes'))
-{
+if (!function_exists('strip_slashes')) {
 	/**
 	 * Strip Slashes
 	 *
@@ -88,13 +51,11 @@ if ( ! function_exists('strip_slashes'))
 	 */
 	function strip_slashes($str)
 	{
-		if ( ! is_array($str))
-		{
+		if (!is_array($str)) {
 			return stripslashes($str);
 		}
 
-		foreach ($str as $key => $val)
-		{
+		foreach ($str as $key => $val) {
 			$str[$key] = strip_slashes($val);
 		}
 
@@ -104,8 +65,7 @@ if ( ! function_exists('strip_slashes'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('strip_quotes'))
-{
+if (!function_exists('strip_quotes')) {
 	/**
 	 * Strip Quotes
 	 *
@@ -122,8 +82,7 @@ if ( ! function_exists('strip_quotes'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('quotes_to_entities'))
-{
+if (!function_exists('quotes_to_entities')) {
 	/**
 	 * Quotes to Entities
 	 *
@@ -134,14 +93,13 @@ if ( ! function_exists('quotes_to_entities'))
 	 */
 	function quotes_to_entities($str)
 	{
-		return str_replace(array("\'","\"","'",'"'), array("&#39;","&quot;","&#39;","&quot;"), $str);
+		return str_replace(array("\'", "\"", "'", '"'), array("&#39;", "&quot;", "&#39;", "&quot;"), $str);
 	}
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('reduce_double_slashes'))
-{
+if (!function_exists('reduce_double_slashes')) {
 	/**
 	 * Reduce Double Slashes
 	 *
@@ -165,8 +123,7 @@ if ( ! function_exists('reduce_double_slashes'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('reduce_multiples'))
-{
+if (!function_exists('reduce_multiples')) {
 	/**
 	 * Reduce Multiples
 	 *
@@ -185,15 +142,14 @@ if ( ! function_exists('reduce_multiples'))
 	 */
 	function reduce_multiples($str, $character = ',', $trim = FALSE)
 	{
-		$str = preg_replace('#'.preg_quote($character, '#').'{2,}#', $character, $str);
+		$str = preg_replace('#' . preg_quote($character, '#') . '{2,}#', $character, $str);
 		return ($trim === TRUE) ? trim($str, $character) : $str;
 	}
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('random_string'))
-{
+if (!function_exists('random_string')) {
 	/**
 	 * Create a "Random" String
 	 *
@@ -203,16 +159,14 @@ if ( ! function_exists('random_string'))
 	 */
 	function random_string($type = 'alnum', $len = 8)
 	{
-		switch ($type)
-		{
+		switch ($type) {
 			case 'basic':
 				return mt_rand();
 			case 'alnum':
 			case 'numeric':
 			case 'nozero':
 			case 'alpha':
-				switch ($type)
-				{
+				switch ($type) {
 					case 'alpha':
 						$pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 						break;
@@ -239,8 +193,7 @@ if ( ! function_exists('random_string'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('increment_string'))
-{
+if (!function_exists('increment_string')) {
 	/**
 	 * Add's _1 to a string or increment the ending number to allow _2, _3, etc
 	 *
@@ -251,15 +204,14 @@ if ( ! function_exists('increment_string'))
 	 */
 	function increment_string($str, $separator = '_', $first = 1)
 	{
-		preg_match('/(.+)'.preg_quote($separator, '/').'([0-9]+)$/', $str, $match);
-		return isset($match[2]) ? $match[1].$separator.($match[2] + 1) : $str.$separator.$first;
+		preg_match('/(.+)' . preg_quote($separator, '/') . '([0-9]+)$/', $str, $match);
+		return isset($match[2]) ? $match[1] . $separator . ($match[2] + 1) : $str . $separator . $first;
 	}
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('alternator'))
-{
+if (!function_exists('alternator')) {
 	/**
 	 * Alternator
 	 *
@@ -272,8 +224,7 @@ if ( ! function_exists('alternator'))
 	{
 		static $i;
 
-		if (func_num_args() === 0)
-		{
+		if (func_num_args() === 0) {
 			$i = 0;
 			return '';
 		}
@@ -285,8 +236,7 @@ if ( ! function_exists('alternator'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('repeater'))
-{
+if (!function_exists('repeater')) {
 	/**
 	 * Repeater function
 	 *

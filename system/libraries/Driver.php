@@ -1,41 +1,6 @@
 <?php
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2018, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package	CodeIgniter
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 1.0.0
- * @filesource
- */
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  * CodeIgniter Driver Library Class
@@ -49,7 +14,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link
  */
-class CI_Driver_Library {
+class CI_Driver_Library
+{
 
 	/**
 	 * Array of drivers that are available to use with the driver class
@@ -93,20 +59,18 @@ class CI_Driver_Library {
 		// Get CodeIgniter instance and subclass prefix
 		$prefix = config_item('subclass_prefix');
 
-		if ( ! isset($this->lib_name))
-		{
+		if (!isset($this->lib_name)) {
 			// Get library name without any prefix
 			$this->lib_name = str_replace(array('CI_', $prefix), '', get_class($this));
 		}
 
 		// The child will be prefixed with the parent lib
-		$child_name = $this->lib_name.'_'.$child;
+		$child_name = $this->lib_name . '_' . $child;
 
 		// See if requested child is a valid driver
-		if ( ! in_array($child, $this->valid_drivers))
-		{
+		if (!in_array($child, $this->valid_drivers)) {
 			// The requested driver isn't valid!
-			$msg = 'Invalid driver requested: '.$child_name;
+			$msg = 'Invalid driver requested: ' . $child_name;
 			log_message('error', $msg);
 			show_error($msg);
 		}
@@ -116,22 +80,18 @@ class CI_Driver_Library {
 		$paths = $CI->load->get_package_paths(TRUE);
 
 		// Is there an extension?
-		$class_name = $prefix.$child_name;
+		$class_name = $prefix . $child_name;
 		$found = class_exists($class_name, FALSE);
-		if ( ! $found)
-		{
+		if (!$found) {
 			// Check for subclass file
-			foreach ($paths as $path)
-			{
+			foreach ($paths as $path) {
 				// Does the file exist?
-				$file = $path.'libraries/'.$this->lib_name.'/drivers/'.$prefix.$child_name.'.php';
-				if (file_exists($file))
-				{
+				$file = $path . 'libraries/' . $this->lib_name . '/drivers/' . $prefix . $child_name . '.php';
+				if (file_exists($file)) {
 					// Yes - require base class from BASEPATH
-					$basepath = BASEPATH.'libraries/'.$this->lib_name.'/drivers/'.$child_name.'.php';
-					if ( ! file_exists($basepath))
-					{
-						$msg = 'Unable to load the requested class: CI_'.$child_name;
+					$basepath = BASEPATH . 'libraries/' . $this->lib_name . '/drivers/' . $child_name . '.php';
+					if (!file_exists($basepath)) {
+						$msg = 'Unable to load the requested class: CI_' . $child_name;
 						log_message('error', $msg);
 						show_error($msg);
 					}
@@ -146,19 +106,15 @@ class CI_Driver_Library {
 		}
 
 		// Do we need to search for the class?
-		if ( ! $found)
-		{
+		if (!$found) {
 			// Use standard class name
-			$class_name = 'CI_'.$child_name;
-			if ( ! class_exists($class_name, FALSE))
-			{
+			$class_name = 'CI_' . $child_name;
+			if (!class_exists($class_name, FALSE)) {
 				// Check package paths
-				foreach ($paths as $path)
-				{
+				foreach ($paths as $path) {
 					// Does the file exist?
-					$file = $path.'libraries/'.$this->lib_name.'/drivers/'.$child_name.'.php';
-					if (file_exists($file))
-					{
+					$file = $path . 'libraries/' . $this->lib_name . '/drivers/' . $child_name . '.php';
+					if (file_exists($file)) {
 						// Include source
 						include_once($file);
 						break;
@@ -168,15 +124,11 @@ class CI_Driver_Library {
 		}
 
 		// Did we finally find the class?
-		if ( ! class_exists($class_name, FALSE))
-		{
-			if (class_exists($child_name, FALSE))
-			{
+		if (!class_exists($class_name, FALSE)) {
+			if (class_exists($child_name, FALSE)) {
 				$class_name = $child_name;
-			}
-			else
-			{
-				$msg = 'Unable to load the requested driver: '.$class_name;
+			} else {
+				$msg = 'Unable to load the requested driver: ' . $class_name;
 				log_message('error', $msg);
 				show_error($msg);
 			}
@@ -188,7 +140,6 @@ class CI_Driver_Library {
 		$this->$child = $obj;
 		return $this->$child;
 	}
-
 }
 
 // --------------------------------------------------------------------------
@@ -205,7 +156,8 @@ class CI_Driver_Library {
  * @author		EllisLab Dev Team
  * @link
  */
-class CI_Driver {
+class CI_Driver
+{
 
 	/**
 	 * Instance of the parent class
@@ -253,30 +205,23 @@ class CI_Driver {
 
 		$class_name = get_class($parent);
 
-		if ( ! isset(self::$_reflections[$class_name]))
-		{
+		if (!isset(self::$_reflections[$class_name])) {
 			$r = new ReflectionObject($parent);
 
-			foreach ($r->getMethods() as $method)
-			{
-				if ($method->isPublic())
-				{
+			foreach ($r->getMethods() as $method) {
+				if ($method->isPublic()) {
 					$this->_methods[] = $method->getName();
 				}
 			}
 
-			foreach ($r->getProperties() as $prop)
-			{
-				if ($prop->isPublic())
-				{
+			foreach ($r->getProperties() as $prop) {
+				if ($prop->isPublic()) {
 					$this->_properties[] = $prop->getName();
 				}
 			}
 
 			self::$_reflections[$class_name] = array($this->_methods, $this->_properties);
-		}
-		else
-		{
+		} else {
 			list($this->_methods, $this->_properties) = self::$_reflections[$class_name];
 		}
 	}
@@ -294,12 +239,11 @@ class CI_Driver {
 	 */
 	public function __call($method, $args = array())
 	{
-		if (in_array($method, $this->_methods))
-		{
+		if (in_array($method, $this->_methods)) {
 			return call_user_func_array(array($this->_parent, $method), $args);
 		}
 
-		throw new BadMethodCallException('No such method: '.$method.'()');
+		throw new BadMethodCallException('No such method: ' . $method . '()');
 	}
 
 	// --------------------------------------------------------------------
@@ -314,8 +258,7 @@ class CI_Driver {
 	 */
 	public function __get($var)
 	{
-		if (in_array($var, $this->_properties))
-		{
+		if (in_array($var, $this->_properties)) {
 			return $this->_parent->$var;
 		}
 	}
@@ -333,10 +276,8 @@ class CI_Driver {
 	 */
 	public function __set($var, $val)
 	{
-		if (in_array($var, $this->_properties))
-		{
+		if (in_array($var, $this->_properties)) {
 			$this->_parent->$var = $val;
 		}
 	}
-
 }
